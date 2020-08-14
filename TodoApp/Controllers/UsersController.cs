@@ -106,11 +106,11 @@ namespace TodoApp.Controllers
                     return HttpNotFound();
                 }
 
-                dbUser.UserName = user.UserName;
+                // dbUser.UserName = user.UserName;
 
                 if (!String.IsNullOrEmpty(user.Password) && !dbUser.Password.Equals(user.Password))
                 {
-                    dbUser.Password = this.membershipProvider.GeneratePasswordHash(user.UserName, user.Password);
+                    dbUser.Password = this.membershipProvider.GeneratePasswordHash(dbUser.UserName, user.Password);
                 }
 
                 dbUser.Roles.Clear();
