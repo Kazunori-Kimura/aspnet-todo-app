@@ -82,7 +82,11 @@ namespace TodoApp.Controllers
                 return HttpNotFound();
             }
             this.SetRoles(user.Roles);
-            return View(user);
+
+            // ViewModelを返す
+            var model = new UserEditViewModel() { Id = user.Id, UserName = user.UserName };
+
+            return View(model);
         }
 
         // POST: Users/Edit/5
@@ -90,7 +94,7 @@ namespace TodoApp.Controllers
         // 詳細については、https://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserName,Password,RoleIds")] User user)
+        public ActionResult Edit([Bind(Include = "Id,UserName,Password,RoleIds")] UserEditViewModel user)
         {
             var roles = db.Roles.Where(role => user.RoleIds.Contains(role.Id)).ToList();
 
@@ -104,7 +108,7 @@ namespace TodoApp.Controllers
 
                 dbUser.UserName = user.UserName;
 
-                if (!dbUser.Password.Equals(user.Password))
+                if (!String.IsNullOrEmpty(user.Password) && !dbUser.Password.Equals(user.Password))
                 {
                     dbUser.Password = this.membershipProvider.GeneratePasswordHash(user.UserName, user.Password);
                 }
