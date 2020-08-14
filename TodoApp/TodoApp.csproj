@@ -139,6 +139,7 @@
     <Compile Include="Models\Todo.cs" />
     <Compile Include="Models\TodoesContext.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserEditViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
